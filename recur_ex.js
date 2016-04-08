@@ -67,6 +67,47 @@ function lazyMakeChange(total, coinsArray) {
     return currentBestChange;
   }
 
-  console.log(makeChange(14, [10, 7, 1]));
+  // console.log(makeChange(14, [10, 7, 1]));
 
-  
+  function merge(left, right) {
+    var mergedArray = [];
+    while ((left.length > 0)&&(right.length > 0)) {
+      if (left[0] > right[0]) {
+        mergedArray.push(left.shift(1));
+      }
+      else {
+        mergedArray.push(right.shift(1));
+      }
+    }
+    return mergedArray.concat(left).concat(right);
+  }
+
+  function mergeSort(array) {
+    if (array.length <= 1) {
+      return array;
+    }
+    var middle = Math.floor(array.length/2);
+    var left = array.slice(0, middle);
+    var right = array.slice(middle+1, array.length);
+    var leftMerge = mergeSort(left);
+    var rightMerge = mergeSort(right);
+    return merge(leftMerge, rightMerge);
+  }
+
+  //console.log(mergeSort([7,4,2,7,3,2,6,8,2,9,5,3,4,5,7,3,7]));
+
+  function subSets(array) {
+
+    if (array.length === 0) {
+      return [[]];
+    }
+    console.log(array.slice(0, array.length-1));
+    var subs = (subSets(array.slice(0, array.length-1)));
+    //console.log(subs);
+    return subs.concat(subs.map(function(sub) {
+      //console.log(sub);
+      return sub.concat([array[array.length]]);
+    }));
+  }
+
+  subSets([1, 2, 3]);
